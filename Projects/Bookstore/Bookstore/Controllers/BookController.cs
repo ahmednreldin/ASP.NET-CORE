@@ -1,5 +1,6 @@
 ﻿using Bookstore.Models;
 using Bookstore.Models.Repositories;
+using Bookstore.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,44 +10,51 @@ using System.Threading.Tasks;
 
 namespace Bookstore.Controllers
 {
-    public class AuthorController : Controller
+    public class BookController : Controller
     {
+        private readonly IBookstoreRepositories<Book> bookstoreRepository;
         private readonly IBookstoreRepositories<Author> authorRepository;
 
-        public AuthorController(IBookstoreRepositories<Author> authorRepository)
+        public BookController(IBookstoreRepositories<Book> bookstoreRepository,IBookstoreRepositories<Author> authorRepository)
         {
+            this.bookstoreRepository = bookstoreRepository;
             this.authorRepository = authorRepository;
-         
         }
-        // GET: HomeController
+        // GET: BookController
         public ActionResult Index()
         {
-            var authors = authorRepository.List();
-            return View(authors);
+            var books = bookstoreRepository.List();
+            return View(books);
         }
 
-        // GET: HomeController/Details/5
+        // GET: BookController/Details/5
         public ActionResult Details(int id)
         {
-            var authors = authorRepository.Find(id);
+            var book = bookstoreRepository.Find(id);
 
-            return View(authors);
+            return View(book);
         }
 
-        // GET: HomeController/Create
+        // GET: BookController/Create
         public ActionResult Create()
-        {        
-            return View();
+        {
+            var model = new BookAuthorViewModel
+            {
+                Authors = authorRepository.List().ToList()
+            };
+
+
+            return View(model);
         }
 
-        // POST: HomeController/Create
+        // POST: BookController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Author author)
+        public ActionResult Create(Book book)
         {
             try
             {
-                authorRepository.Add(author);
+                bookstoreRepository.Add(book);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -55,24 +63,21 @@ namespace Bookstore.Controllers
             }
         }
 
-        // GET: HomeController/Edit/5
+        // GET: BookController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var book = bookstoreRepository.Find(id);
+            return View(book);
         }
 
-        // POST: HomeController/Edit/5
+        // POST: BookController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Author author)
+        public ActionResult Edit(int id, Book book)
         {
             try
             {
-
-                /* Author oldAuthor = authorRepository.Find(id);
-                 oldAuthor.FullName = author.FullName;*/
-                authorRepository.Update(id, author);
-
+                bookstoreRepository.Update(id, book);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -81,20 +86,22 @@ namespace Bookstore.Controllers
             }
         }
 
-        // GET: HomeController/Delete/5
+        // GET: BookController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var book = bookstoreRepository.Find(id);
+            return View(book);
         }
 
-        // POST: HomeController/Delete/5
+        // POST: BookController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Author author)
+        public ActionResult Delete(int id, Book book)
         {
             try
+
             {
-                authorRepository.Delete(id);
+                bookstoreRepository.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -39,6 +39,8 @@ namespace Bookstore
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles(); // enable wwwroot folder 
+
             app.UseMvcWithDefaultRoute(); //  url ../author/index
 
          }
