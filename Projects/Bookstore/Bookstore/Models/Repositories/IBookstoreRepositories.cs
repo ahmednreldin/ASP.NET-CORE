@@ -22,5 +22,8 @@ namespace Bookstore.Models.Repositories
         // Delete Element
         void Delete(int id);
 
+        // Search Method
+        public List<TEntity> Search(string term);
+
     }
 }

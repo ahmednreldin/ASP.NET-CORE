@@ -17,21 +17,36 @@ namespace Bookstore.Models.Repositories
             books = new List<Book>() {
                 new Book
                 {
-                    Id = 1 , Title = "c# programming",Description = "No Description"
+                    Id = 1 , 
+                    Title = "c# programming",
+                    Description = "No Description",
+                    ImageUrl ="c#.png" ,
+                    Author = new Author { Id = 1 } ,
                 },
                 new Book
                 {
-                    Id = 2 , Title = "Java programming",Description = "Nothing"
+                    Id = 2 , 
+                    Title = "Java programming",
+                    Description = "Nothing",
+                    ImageUrl ="java.png",
+                    Author = new Author { },
                 },
                 new Book
                 {
-                    Id = 3 , Title = "Python programming",Description = "Nothing"
+                    Id = 3 , 
+                    Title = "Python programming",
+                    Description = "Nothing",
+                    ImageUrl ="python.png",
+                    Author = new Author { }
                 },
             };
         }
 
         public void Add(Book entity)
         {
+            // ID identity increment 
+            entity.Id = books.Max(b => b.Id) + 1;
+                
             books.Add(entity);
         }
 
@@ -53,12 +68,18 @@ namespace Bookstore.Models.Repositories
            return books;
         }
 
+        public List<Book> Search(string term)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(int id,Book newbook)
         {
             var book = Find(id);
-            newbook.Title = book.Title;
-            newbook.Description = book.Description;
-            newbook.Author = book.Author;
+            book.Title = newbook.Title;
+            book.Description = newbook.Description;
+            book.Author = newbook.Author;
+            book.ImageUrl = newbook.ImageUrl;
         }
     }
 }

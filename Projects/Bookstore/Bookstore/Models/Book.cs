@@ -11,6 +11,8 @@ namespace Bookstore.Models
         public string Title { get; set; }
         public string Description { get; set; }
 
+        public string ImageUrl { get; set; }
+
         // Relationship between class book & author 
         public Author Author { get; set; }
     }
