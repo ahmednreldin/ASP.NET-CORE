@@ -1,0 +1,20 @@
+﻿@model List<Post>
+
+<h1>Home Page</h1>
+
+<div>
+
+    <img src="~/content/static/person.jpg"  style="width:150px"/>
+    <ul>
+        @foreach (var post in Model)
+        {
+            <li>
+                <a asp-controller="Home" asp-action="Post" asp-route-id="@post.Id">
+                    @post.Title
+                </a>
+                -
+            </li>
+
+        }
+    </ul>
+</div>
