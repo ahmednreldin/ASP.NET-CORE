@@ -1,0 +1,32 @@
+﻿@model TodoBindingModel
+
+    <div  style="margin:50px">
+        <form asp-controller="Home"
+              enctype="multipart/form-data"
+              asp-action="Create" method="post">
+
+            <div class="col-md-3">
+                <label class="col-form-label">Title</label>
+                <input asp-for="Title" class="form-control"/>
+            </div>
+
+            
+            <div class="col-md-3">
+                <label class="col-form-label">Body</label>
+                <input asp-for="Body" class="form-control"/>
+            </div>
+
+
+            <div class="input-group col-md-5"style="margin:10px 0 10px 0">
+                <input type="file" class="form-control" asp-for="Image" />
+                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+            </div>
+
+            <div class="col-12 ">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+
+
+        </form>
+
+    </div>

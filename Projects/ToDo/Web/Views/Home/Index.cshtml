@@ -1,0 +1,30 @@
+﻿@model List<TodoItem>
+
+
+<h1>Tasks</h1>
+
+<div class="container">
+    <ul class="list-group">
+        @foreach (var itm in Model)
+        {
+
+            <li class="list-group-item">
+                <img src="~/images/@itm.ImageUrl" style="width:80px;" class="img-thumbnail" />
+                <div>
+                    <a asp-controller="Home" asp-action="View" asp-route-Id="@itm.Id">@itm.Title</a>
+                    <p> @itm.Body</p>
+                </div>
+                
+                <a asp-controller="Home"
+                   asp-action="Edit"
+                   asp-route-Id="@itm.Id"
+                   class="btn btn-info"
+                   >Edit</a>
+                <a asp-controller="Home" 
+                   asp-action="Remove" 
+                   asp-route-Id="@itm.Id" class="btn btn-danger">Remove</a>
+            
+            </li>
+        }
+    </ul>
+</div>

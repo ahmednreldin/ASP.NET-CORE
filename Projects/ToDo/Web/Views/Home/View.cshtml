@@ -1,0 +1,17 @@
+﻿@model TodoItem;
+@{ 
+    ViewBag.Title = Model.Title;
+}
+
+<div class="container">
+    <h1>ViewBag.Title</h1>
+
+    <p>@Model.Body</p>
+    <img src="~/images/@Model.ImageUrl" class="img-thumbnail" />
+        
+    <div>
+        <a class="btn btn-dark" asp-controller="Home" asp-action="Index">Back</a>
+    </div>
+
+</div>
+
