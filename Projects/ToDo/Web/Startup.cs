@@ -1,15 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Core.Interfaces;
 using Infrastructure.Repository;
 using Core.Interfaces.FileManager;
@@ -33,17 +28,28 @@ namespace Web
                 options => options.UseSqlServer(connString)
                 );
 
-//            services.AddScoped<AppDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+                options.SignIn.RequireConfirmedAccount = true
+            ).AddEntityFrameworkStores<AppDbContext>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                "IsAdmin",
+                policyBuilder => policyBuilder
+                .RequireClaim("Admin"));
+            });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IFileManager, FileManager>();
 
             services.AddControllersWithViews();
-                
+
+            services.AddRazorPages();
+
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -54,12 +60,17 @@ namespace Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "defualt",
                     pattern: "{Controller=Home}/{action=index}/{id?}"
                     );
+                endpoints.MapRazorPages();
             });
 
         }

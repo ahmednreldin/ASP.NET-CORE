@@ -5,21 +5,25 @@
               enctype="multipart/form-data"
               asp-action="Create" method="post">
 
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="col-md-3">
                 <label class="col-form-label">Title</label>
                 <input asp-for="Title" class="form-control"/>
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
 
             
             <div class="col-md-3">
                 <label class="col-form-label">Body</label>
                 <input asp-for="Body" class="form-control"/>
+                <span asp-validation-for="Body" class="text-danger"></span>
             </div>
 
 
             <div class="input-group col-md-5"style="margin:10px 0 10px 0">
                 <input type="file" class="form-control" asp-for="Image" />
                 <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                <span asp-validation-for="Image" class="text-danger"></span>
             </div>
 
             <div class="col-12 ">

@@ -6,21 +6,28 @@
     <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
         <!-- Navbar -->
-        <nav class="navbar navbar-dark bg-dark" >
+        <nav class="navbar navbar-dark bg-dark">
             <form class="container-fluid justify-content-start">
                 <a class="btn btn-outline-success me-2" type="button" asp-controller="Home" asp-action="Index">Main Tasks</a>
                 <a class="btn btn-sm btn-outline-secondary" type="button" asp-controller="Home" asp-action="Create">Create Task</a>
+                <a class="btn btn-sm btn-outline-secondary" type="button" asp-controller="Api" asp-action="Index">API</a>
+                <partial name="_LoginPartial" />
             </form>
         </nav>
         <!-- Navbar -->
+    
 
+    <div class="container">
         @RenderBody()
-
     </div>
 
+
+
+    @RenderSection("scripts", required: false)
     <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
 </body>
 
 </html>

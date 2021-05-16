@@ -1,6 +1,7 @@
 ﻿using Core.Entites;
 using Core.Interfaces;
 using Core.Interfaces.FileManager;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.ViewModels;
 
@@ -27,6 +28,8 @@ namespace Web.Controllers
             var result = _todo.Entity.GetItemById(id);
             return View(result);
         }
+
+//        [Authorize(Policy = "IsAdmin")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -36,6 +39,11 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult Create(TodoBindingModel model)
         {
+            if(!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "You Have to fill All required fields");
+                return View();
+            }
             string fileName = "";
             if(model.Image != null)
             {
